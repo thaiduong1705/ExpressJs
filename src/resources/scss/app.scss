@@ -1,0 +1,16 @@
+@import 'variable';
+
+.text {
+    font-size: 14px;
+}
+
+header {
+    color: $red-color;
+    padding: 8px;
+    font-size: 20px;
+}
+
+footer {
+    color: green;
+    font-size: 20px;
+}
