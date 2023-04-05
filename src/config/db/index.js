@@ -6,8 +6,8 @@ async function connect() {
             "mongodb+srv://dbTest:abc123456789@test.j42uwwf.mongodb.net/test"
         );
         console.log("Connect successfully");
-    } catch {
-        console.log("Connect fail");
+    } catch(e) {
+        console.log(e);
     }
 }
 
