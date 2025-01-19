@@ -7,6 +7,7 @@ const { extname, dirname } = require("path");
 
 const db = require("./config/db");
 const routes = require("./routes");
+const Sort = require("./app/middlewares/Sort");
 
 // Connect to DB
 db.connect();
@@ -24,7 +25,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // HTTP logger
-app.use(morgan("combined"));
+// app.use(morgan("combined"));
 
 // Template engine
 app.engine(
@@ -33,9 +34,29 @@ app.engine(
         extname: ".hbs",
         helpers: {
             sum: (a, b) => a + b,
+            sortable: (field, sort) => {
+                const sortType = field === sort.column ? sort.type : "default";
+
+                const icons = {
+                    default: "fa-solid fa-caret-down",
+                    asc: "fa-solid fa-caret-down",
+                    desc: "fa-solid fa-caret-up"
+                }
+                const types = {
+                    default: "asc",
+                    asc: "desc",
+                    desc: "asc"
+                }
+
+                const icon = icons[sortType];
+                const type = types[sortType];
+                return `<a href="?_sort&column=${field}&type=${type}"><i class="${icon}"></i></a>`
+            } 
         },
     })
 );
+
+app.use(Sort);
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));

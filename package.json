@@ -1,38 +1,38 @@
 {
-  "name": "package",
-  "version": "1.0.0",
-  "description": "đây là bản test",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect ./src/index.js",
-    "watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thaiduong1705/test.git"
-  },
-  "keywords": [
-    "f8",
-    "nodejs"
-  ],
-  "author": "ThaiDuong",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thaiduong1705/test/issues"
-  },
-  "homepage": "https://github.com/thaiduong1705/test#readme",
-  "dependencies": {
-    "express": "^4.18.2",
-    "express-handlebars": "^7.0.2",
-    "method-override": "^3.0.0",
-    "mongoose": "^7.0.3",
-    "mongoose-delete": "^0.5.4",
-    "mongoose-slug-updater": "^3.3.0",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.21"
-  },
-  "devDependencies": {
-    "sass": "^1.59.3"
-  }
+	"name": "package",
+	"version": "1.0.0",
+	"description": "đây là bản test",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon --inspect ./src/index.js",
+		"watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thaiduong1705/test.git"
+	},
+	"keywords": [
+		"f8",
+		"nodejs"
+	],
+	"author": "ThaiDuong",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/thaiduong1705/test/issues"
+	},
+	"homepage": "https://github.com/thaiduong1705/test#readme",
+	"dependencies": {
+		"express": "^4.18.2",
+		"express-handlebars": "^7.0.7",
+		"method-override": "^3.0.0",
+		"mongoose": "^7.5.0",
+		"mongoose-delete": "^0.6.0",
+		"mongoose-slug-updater": "^4.0.0",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.22"
+	},
+	"devDependencies": {
+		"sass": "^1.59.3"
+	}
 }

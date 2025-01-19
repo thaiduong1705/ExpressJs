@@ -1,22 +1,45 @@
-<div class="mt-4">
+<form name="container-form" class="mt-4" method="POST" action="/courses/handle-form-action">
     <div>
         <h3>Khóa học của tôi</h3>
-        <a href="/me/trash/courses">Thùng tác</a>
+        <a href="/me/trash/courses">Thùng tác ({{deletedCount}})</a>
+
+        <div class="mt-4 d-flex align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkboxAll">
+                <label class="form-check-label" for="checkboxAll">
+                    Chọn tất cả
+                </label>
+            </div>
+            <select class="form-select form-select-sm checkbox-select-all-option" name="action" required>
+                <option selected value="">--Chọn hành động--</option>
+                <option value="delete">Xoá</option>
+            </select>
+            <button class="btn btn-primary btn-sm" id="action" type="submit" disabled="true">Thực hiện</button>
+        </div>
     </div>
 
     <table class="table mt-4">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Tên khóa học</th>
-                <th scope="col">Trình độ</th>
-                <th scope="col" colspan="2">Thời gian tạo</th>
+                <th scope="col">Số thứ tự</th>
+                <th scope="col">
+                    Tên khóa học {{{sortable 'name' _sort}}}
+                </th>
+                <th scope="col">Trình độ {{{sortable 'level' _sort}}}</th>
+                <th scope="col" colspan="2">Thời gian tạo {{{sortable 'createAt' _sort}}}</th>
             </tr>
         </thead>
         <tbody>
             {{#each courses}}
             <tr>
-                <th scope="row">{{sum @index 1}}</th>
+
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{this._id}}" name="coursesIds[]" />
+                    </div>
+                </td>
+                <td scope="row">{{sum @index 1}}</td>
                 <td>{{this.name}}</td>
                 <td>{{this.level}}</td>
                 <td>{{this.createdAt}}</td>
@@ -36,7 +59,7 @@
             {{/each}}
         </tbody>
     </table>
-</div>
+</form>
 
 {{!-- Confirm delete course --}}
 <div id="delete-course-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -63,6 +86,12 @@
     const deleteModal = document.getElementById('delete-course-modal')
     const deleteBtn = document.getElementById('btn-delete-course');
     const deleteForm = document.getElementById('delete-course-form');
+    const checkboxAll = document.getElementById('checkboxAll');
+    const courseItemCheckBox = document.querySelectorAll('input[name="coursesIds[]"]');
+    const actionBtn = document.getElementById('action');
+    const containerForm = document.forms['container-form'];
+
+    let count = 0;
     if (deleteModal) {
         deleteModal.addEventListener('show.bs.modal', function (event) {
             const button = event.relatedTarget;
@@ -72,5 +101,29 @@
     deleteBtn.onclick = function () {
         deleteForm.action = "/courses/" + id + "?_method=DELETE";
         deleteForm.submit();
+    }
+
+    checkboxAll.onchange = function () {
+        let isCheckAll = this.checked;
+        courseItemCheckBox.forEach((checkbox) => {
+            checkbox.checked = isCheckAll;
+        })
+        isCheckAll ? i = courseItemCheckBox.length : i = 0;
+        deleteDisabled(i);
+    }
+
+    courseItemCheckBox.forEach((checkbox) => {
+        checkbox.onchange = function () {
+            let i = document.querySelectorAll('input[name="coursesIds[]"]:checked').length;
+            let isCheckAll = courseItemCheckBox.length === i;
+            checkboxAll.checked = isCheckAll;
+            deleteDisabled(i);
+        }
+    })
+
+
+    // Add or remove disabled
+    function deleteDisabled(i) {
+        i > 0 ? actionBtn.removeAttribute("disabled") : actionBtn.setAttribute('disabled', true);
     }
 </script>
